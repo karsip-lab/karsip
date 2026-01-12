@@ -3,14 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tentang - KArsip Pro</title>
+
+<title>Tentang KArsip Pro – Aplikasi Kearsipan ASN</title>
+
+<meta name="description" content="KArsip Pro adalah aplikasi pencarian kode klasifikasi arsip pemerintah daerah untuk ASN, PNS, dan PPPK. Temukan kode arsip dengan cepat, akurat, dan gratis.">
+
+<meta name="keywords" content="kode klasifikasi arsip, arsip pemerintah, sistem kearsipan, arsip ASN, arsip PNS, klasifikasi arsip daerah">
+
+<meta name="author" content="KArsip Pro">
+
+<!-- Open Graph (untuk WhatsApp, Facebook, dll) -->
+<meta property="og:title" content="KArsip Pro – Pencarian Kode Klasifikasi Arsip">
+<meta property="og:description" content="Aplikasi pencarian kode klasifikasi arsip pemerintah daerah. Cepat, akurat, dan gratis.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://karsip.pages.dev/tentang">
+<meta property="og:image" content="https://karsip.pages.dev/og-image.jpg">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KArsip Pro – Pencarian Kode Klasifikasi Arsip">
+<meta name="twitter:description" content="Cari kode klasifikasi arsip pemerintah daerah dengan cepat dan akurat.">
+<meta name="twitter:image" content="https://karsip.pages.dev/og-image.jpg">
+
+<!-- Canonical -->
+<link rel="canonical" href="https://karsip.pages.dev/tentang">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
+<!-- PapaParse -->
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
 <style>
 body { font-family: 'Inter', sans-serif; }
-.glass-panel { background:white; border:1px solid #e2e8f0 }
+.glass-panel { background:white;border:1px solid #e2e8f0 }
+.hidden{display:none}
+.loader{
+border:3px solid #f3f3f3;
+border-top:3px solid #3b82f6;
+border-radius:50%;
+width:24px;height:24px;
+animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 
@@ -18,18 +52,25 @@ body { font-family: 'Inter', sans-serif; }
 
 <header class="bg-slate-900 text-white py-8 sm:py-10 shadow-lg relative">
   <div class="container mx-auto px-4 text-center">
-    <h1 class="text-3xl sm:text-4xl font-extrabold italic">
-      <span class="text-blue-500">K</span><span class="text-red-500">A</span>rsip Pro
-    </h1>
-    <p class="text-slate-400 text-xs sm:text-sm font-semibold mt-1">
-      Pencarian Cepat Kode Klasifikasi Arsip Pemerintah Daerah
-    </p>
-  </div>
+    
+
+
+<div class="text-3xl sm:text-4xl font-extrabold italic">
+  <span class="text-blue-500">K</span><span class="text-red-500">A</span>rsip Pro
+</div>
+
+<h1 class="text-sm sm:text-base md:text-lg font-medium text-slate-300 mt-1">
+  Pencarian Kode Klasifikasi Arsip Pemerintah Daerah
+</h1>
+ 
+
+
+</div>
 
   <nav class="mt-4 flex justify-center gap-6 sm:absolute sm:top-6 sm:left-6 sm:mt-0 text-sm font-semibold">
     <a href="index.html">Home</a>
     <a href="tentang.html">Tentang</a>
-<a href="kontak.html">Kontak</a>
+    <a href="kontak.html">Kontak</a>
   </nav>
 </header>
 
