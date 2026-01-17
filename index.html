@@ -15,31 +15,100 @@
   <!-- Critical CSS (INLINE) -->
   <style>
     *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;background:#fff;color:#1e293b}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+      background:#fff;
+      color:#1e293b;
+      font-size:1.1rem; /* +10% */
+    }
+
     header{background:#0f172a;color:#fff;padding:2rem 1rem;position:relative}
-    .brand{font-size:2rem;font-weight:800;font-style:italic;text-align:center}
+
+    .brand{
+      font-size:2.2rem; /* sebelumnya 2rem */
+      font-weight:800;
+      font-style:italic;
+      text-align:center
+    }
     .brand span:first-child{color:#3b82f6}
     .brand span:last-child{color:#ef4444}
-    .subtitle{text-align:center;color:#cbd5f5;font-size:.9rem;margin-top:.25rem}
+
+    .subtitle{
+      text-align:center;
+      color:#cbd5f5;
+      font-size:1rem; /* sebelumnya 0.9rem */
+      margin-top:.25rem
+    }
+
     nav{display:flex;gap:1rem;justify-content:center;margin-top:1rem}
-    nav a{color:white;text-decoration:none;font-weight:600;font-size:.9rem}
+    nav a{color:white;text-decoration:none;font-weight:600;font-size:.95rem}
 
     main{padding:1rem;max-width:900px;margin:auto}
+
     .search-box{max-width:700px;margin:2rem auto 1rem}
     form{display:flex;gap:.5rem;flex-wrap:wrap}
-    input{flex:1;padding:.8rem;border-radius:.5rem;border:1px solid #e5e7eb;font-size:1rem}
-    button{padding:.8rem 1.2rem;border-radius:.5rem;border:none;background:#2563eb;color:white;font-weight:600;cursor:pointer}
 
-    .hint{text-align:center;font-size:.85rem;color:#475569;margin-top:.5rem}
+    input{
+      flex:1;
+      padding:.85rem;
+      border-radius:.5rem;
+      border:1px solid #e5e7eb;
+      font-size:1.1rem; /* +10% */
+    }
 
-    .loader{width:24px;height:24px;border:3px solid #e5e7eb;border-top:3px solid #2563eb;border-radius:50%;animation:spin .8s linear infinite;margin:1.5rem auto;display:none}
+    button{
+      padding:.85rem 1.2rem;
+      border-radius:.5rem;
+      border:none;
+      background:#2563eb;
+      color:white;
+      font-weight:600;
+      font-size:1.1rem; /* +10% */
+      cursor:pointer
+    }
+
+    .hint{text-align:center;font-size:.95rem;color:#475569;margin-top:.5rem}
+
+    .loader{
+      width:24px;
+      height:24px;
+      border:3px solid #e5e7eb;
+      border-top:3px solid #2563eb;
+      border-radius:50%;
+      animation:spin .8s linear infinite;
+      margin:1.5rem auto;
+      display:none
+    }
+
     @keyframes spin{to{transform:rotate(360deg)}}
 
     .results{max-width:700px;margin:1rem auto}
-    .card{border:1px solid #e5e7eb;border-radius:.75rem;padding:1rem;margin-bottom:.75rem}
-    .breadcrumb{font-size:.7rem;color:#64748b;font-family:monospace}
-    .code{font-family:monospace;font-weight:700;color:#1d4ed8}
-    .desc{margin-top:.25rem}
+
+    .card{
+      border:1px solid #e5e7eb;
+      border-radius:.75rem;
+      padding:1rem;
+      margin-bottom:.75rem
+    }
+
+    .breadcrumb{
+      font-size:.8rem; /* +10% */
+      color:#64748b;
+      font-family:monospace
+    }
+
+    .code{
+      font-family:monospace;
+      font-weight:700;
+      color:#1d4ed8;
+      font-size:1.15rem; /* +10% */
+    }
+
+    .desc{
+      margin-top:.25rem;
+      font-size:1.05rem; /* +10% */
+    }
 
     .center{text-align:center}
   </style>
