@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -17,7 +17,7 @@ body{
   font-size:1.1rem;
 }
 
-header{background:#0f172a;color:#fff;padding:2rem 1rem}
+header{background:#0f172a;color:#fff;padding:2rem 1rem;position:relative}
 
 .brand{
   font-size:2.2rem;
@@ -37,8 +37,32 @@ header{background:#0f172a;color:#fff;padding:2rem 1rem}
   margin-top:.25rem
 }
 
-nav{display:flex;gap:1rem;justify-content:center;margin-top:1rem}
+nav{
+  display:flex;
+  gap:1rem;
+  justify-content:center;
+  margin-top:1rem
+}
 nav a{color:white;text-decoration:none;font-weight:600;font-size:.95rem}
+
+/* Hamburger */
+.menu-toggle{
+  display:none;
+  position:absolute;
+  right:1rem;
+  top:1.5rem;
+  background:none;
+  border:none;
+  color:white;
+  font-size:1.6rem;
+  cursor:pointer;
+}
+
+@media (max-width: 640px){
+  .menu-toggle{display:block}
+  nav{display:none;flex-direction:column;align-items:center}
+  nav.open{display:flex}
+}
 
 main{padding:1rem;max-width:900px;margin:auto}
 
@@ -60,7 +84,9 @@ p{line-height:1.7}
   <div class="brand"><span>K</span><span>A</span>rsip</div>
   <div class="subtitle"><strong>Pencarian Kode Klasifikasi Arsip Pemerintah Daerah</strong></div>
 
-  <nav>
+  <button class="menu-toggle" aria-label="Buka menu" aria-expanded="false">☰</button>
+
+  <nav id="mainNav">
     <a href="index.html">Home</a>
     <a href="tentang.html">Tentang</a>
     <a href="kontak.html">Kontak</a>
@@ -73,19 +99,28 @@ p{line-height:1.7}
   <div class="card">
     <p>
       <strong>KArsip</strong> adalah aplikasi web sederhana untuk membantu pencarian
-      kode klasifikasi arsip pemerintah daerah secara cepat dan akurat.
+      kode klasifikasi arsip pemerintah daerah secara cepat, ringan, dan mudah digunakan.
     </p>
 
     <p>
       Aplikasi ini dirancang untuk mendukung pekerjaan arsiparis, ASN,
-      dan pengelola arsip dalam proses pemberkasan dan penomoran naskah dinas.
+      dan pengelola arsip dalam proses pemberkasan serta penomoran naskah dinas.
     </p>
 
     <p>
-      Data bersumber dari regulasi resmi dan diperbarui secara berkala.
+      Fokus utama KArsip adalah kecepatan, kemudahan, dan kompatibilitas di semua perangkat.
     </p>
   </div>
 </main>
+
+<script>
+const toggle = document.querySelector(".menu-toggle");
+const nav = document.getElementById("mainNav");
+toggle.addEventListener("click", () => {
+  const open = nav.classList.toggle("open");
+  toggle.setAttribute("aria-expanded", open);
+});
+</script>
 
 </body>
 </html>

@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kontak - KArsip</title>
-  <meta name="description" content="Kontak pengembang KArsip.">
+  <meta name="description" content="Halaman kontak KArsip.">
   <link rel="canonical" href="https://karsip.pages.dev/kontak.html">
 
 <style>
@@ -17,7 +17,7 @@ body{
   font-size:1.1rem;
 }
 
-header{background:#0f172a;color:#fff;padding:2rem 1rem}
+header{background:#0f172a;color:#fff;padding:2rem 1rem;position:relative}
 
 .brand{
   font-size:2.2rem;
@@ -37,8 +37,32 @@ header{background:#0f172a;color:#fff;padding:2rem 1rem}
   margin-top:.25rem
 }
 
-nav{display:flex;gap:1rem;justify-content:center;margin-top:1rem}
+nav{
+  display:flex;
+  gap:1rem;
+  justify-content:center;
+  margin-top:1rem
+}
 nav a{color:white;text-decoration:none;font-weight:600;font-size:.95rem}
+
+/* Hamburger */
+.menu-toggle{
+  display:none;
+  position:absolute;
+  right:1rem;
+  top:1.5rem;
+  background:none;
+  border:none;
+  color:white;
+  font-size:1.6rem;
+  cursor:pointer;
+}
+
+@media (max-width: 640px){
+  .menu-toggle{display:block}
+  nav{display:none;flex-direction:column;align-items:center}
+  nav.open{display:flex}
+}
 
 main{padding:1rem;max-width:900px;margin:auto}
 
@@ -60,7 +84,9 @@ p{line-height:1.7}
   <div class="brand"><span>K</span><span>A</span>rsip</div>
   <div class="subtitle"><strong>Pencarian Kode Klasifikasi Arsip Pemerintah Daerah</strong></div>
 
-  <nav>
+  <button class="menu-toggle" aria-label="Buka menu" aria-expanded="false">☰</button>
+
+  <nav id="mainNav">
     <a href="index.html">Home</a>
     <a href="tentang.html">Tentang</a>
     <a href="kontak.html">Kontak</a>
@@ -73,17 +99,29 @@ p{line-height:1.7}
   <div class="card">
     <p>
       Jika Anda memiliki saran, masukan, atau ingin melaporkan kesalahan data,
-      silakan hubungi pengembang KArsip.
+      silakan hubungi pengelola KArsip.
     </p>
 
     <p>
       Email: <strong>admin@karsip.pages.dev</strong><br>
       Website: <strong>https://karsip.pages.dev</strong>
-      WA: 0822-1111-xxxx
     </p>
 
+    <p>
+      Aplikasi ini dikembangkan untuk membantu komunitas kearsipan secara gratis
+      dan terbuka.
+    </p>
   </div>
 </main>
+
+<script>
+const toggle = document.querySelector(".menu-toggle");
+const nav = document.getElementById("mainNav");
+toggle.addEventListener("click", () => {
+  const open = nav.classList.toggle("open");
+  toggle.setAttribute("aria-expanded", open);
+});
+</script>
 
 </body>
 </html>

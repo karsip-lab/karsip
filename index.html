@@ -1,12 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>KArsip - Pencarian Kode Klasifikasi Arsip Pemerintah Daerah</title>
-  <meta name="description" content="KArsip adalah aplikasi pencarian cepat kode klasifikasi arsip pemerintah daerah untuk pemberkasan arsip dan penomoran naskah dinas.">
-
+  <meta name="description" content="KArsip adalah aplikasi pencarian cepat kode klasifikasi arsip pemerintah daerah.">
   <link rel="canonical" href="https://karsip.pages.dev/">
 
 <style>
@@ -19,7 +17,7 @@ body{
   font-size:1.1rem;
 }
 
-header{background:#0f172a;color:#fff;padding:2rem 1rem}
+header{background:#0f172a;color:#fff;padding:2rem 1rem;position:relative}
 
 .brand{
   font-size:2.2rem;
@@ -39,8 +37,32 @@ header{background:#0f172a;color:#fff;padding:2rem 1rem}
   margin-top:.25rem
 }
 
-nav{display:flex;gap:1rem;justify-content:center;margin-top:1rem}
+nav{
+  display:flex;
+  gap:1rem;
+  justify-content:center;
+  margin-top:1rem
+}
 nav a{color:white;text-decoration:none;font-weight:600;font-size:.95rem}
+
+/* Hamburger */
+.menu-toggle{
+  display:none;
+  position:absolute;
+  right:1rem;
+  top:1.5rem;
+  background:none;
+  border:none;
+  color:white;
+  font-size:1.6rem;
+  cursor:pointer;
+}
+
+@media (max-width: 640px){
+  .menu-toggle{display:block}
+  nav{display:none;flex-direction:column;align-items:center}
+  nav.open{display:flex}
+}
 
 main{padding:1rem;max-width:900px;margin:auto}
 
@@ -68,7 +90,7 @@ button{
 }
 
 @media (max-width:640px){
-  button{width:100%}
+  form button{width:100%}
 }
 
 .hint{text-align:center;font-size:.95rem;color:#475569;margin-top:.5rem}
@@ -116,27 +138,18 @@ button{
 .center{text-align:center}
 </style>
 
-<!-- Firefox fallback -->
 <script>
 if(!window.requestIdleCallback){
-  window.requestIdleCallback=function(cb){
-    return setTimeout(cb,1);
-  };
+  window.requestIdleCallback=function(cb){return setTimeout(cb,1);}
 }
 </script>
 
-<!-- PapaParse loader (Firefox safe) -->
 <script>
 function loadPapaParse(cb){
-  if (window.Papa) {
-    cb();
-    return;
-  }
+  if (window.Papa) { cb(); return; }
   const s = document.createElement("script");
   s.src = "https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js";
-  s.onload = () => {
-    if (window.Papa) cb();
-  };
+  s.onload = () => { if (window.Papa) cb(); };
   document.head.appendChild(s);
 }
 </script>
@@ -148,7 +161,9 @@ function loadPapaParse(cb){
   <div class="brand"><span>K</span><span>A</span>rsip</div>
   <div class="subtitle"><strong>Pencarian Kode Klasifikasi Arsip Pemerintah Daerah</strong></div>
 
-  <nav>
+  <button class="menu-toggle" aria-label="Buka menu" aria-expanded="false">☰</button>
+
+  <nav id="mainNav">
     <a href="index.html">Home</a>
     <a href="tentang.html">Tentang</a>
     <a href="kontak.html">Kontak</a>
@@ -171,6 +186,15 @@ function loadPapaParse(cb){
     <div id="resultsContainer"></div>
   </div>
 </main>
+
+<script>
+const toggle = document.querySelector(".menu-toggle");
+const nav = document.getElementById("mainNav");
+toggle.addEventListener("click", () => {
+  const open = nav.classList.toggle("open");
+  toggle.setAttribute("aria-expanded", open);
+});
+</script>
 
 <script>
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vT3jPw6CxKWkDyP-bIKQ0Wqd5KxokevU_5StuP6og0Y2frtVmHdZngrTr7xyXtipPF9JzfduelqSJH1/pub?output=csv";
@@ -224,7 +248,7 @@ function performSearch(q){
 
 function makeBreadcrumb(k){
   const p=k.split(".");
-  return p.map((_,i)=>p.slice(0,i+1).join(".")).join(" � ");
+  return p.map((_,i)=>p.slice(0,i+1).join(".")).join(" › ");
 }
 
 function showResults(q){
@@ -253,9 +277,7 @@ function showResults(q){
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
-  loadPapaParse(() => {
-    loadData();
-  });
+  loadPapaParse(loadData);
 
   searchForm.addEventListener("submit",e=>{
     e.preventDefault();
