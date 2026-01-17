@@ -12,123 +12,135 @@
   <!-- Preload CSV -->
   <link rel="preload" as="fetch" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vT3jPw6CxKWkDyP-bIKQ0Wqd5KxokevU_5StuP6og0Y2frtVmHdZngrTr7xyXtipPF9JzfduelqSJH1/pub?output=csv" crossorigin>
 
-  <!-- Critical CSS (INLINE) -->
-  
 <style>
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
-      background:#fff;
-      color:#1e293b;
-      font-size:1.1rem; /* +10% */
-    }
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+  background:#fff;
+  color:#1e293b;
+  font-size:1.1rem;
+}
 
-    header{background:#0f172a;color:#fff;padding:2rem 1rem;position:relative}
+header{background:#0f172a;color:#fff;padding:2rem 1rem;position:relative}
 
-    .brand{
-  font-size: clamp(2.2rem, 2.2rem, 2.2rem);
+.brand{
+  font-size:2.2rem;
   font-weight:800;
   font-style:italic;
   text-align:center;
-  line-height: 1;
-  white-space: nowrap;
-    }
-    .brand span:first-child{color:#3b82f6}
-    .brand span:last-child{color:#ef4444}
+  line-height:1;
+  white-space:nowrap;
+}
+.brand span:first-child{color:#3b82f6}
+.brand span:last-child{color:#ef4444}
 
-    .subtitle{
-      text-align:center;
-      color:#cbd5f5;
-      font-size:1rem; /* sebelumnya 0.9rem */
-      margin-top:.25rem
-    }
+.subtitle{
+  text-align:center;
+  color:#cbd5f5;
+  font-size:1rem;
+  margin-top:.25rem
+}
 
-    nav{display:flex;gap:1rem;justify-content:center;margin-top:1rem}
-    nav a{color:white;text-decoration:none;font-weight:600;font-size:.95rem}
+nav{display:flex;gap:1rem;justify-content:center;margin-top:1rem}
+nav a{color:white;text-decoration:none;font-weight:600;font-size:.95rem}
 
-    main{padding:1rem;max-width:900px;margin:auto}
+main{padding:1rem;max-width:900px;margin:auto}
 
-    .search-box{max-width:700px;margin:2rem auto 1rem}
-    form{display:flex;gap:.5rem;flex-wrap:wrap}
+.search-box{max-width:700px;margin:2rem auto 1rem}
+form{display:flex;gap:.5rem;flex-wrap:wrap;width:100%}
 
-    input{
-      flex:1;
-      padding:.85rem;
-      border-radius:.5rem;
-      border:1px solid #e5e7eb;
-      font-size:1.1rem; /* +10% */
-    }
+input{
+  flex:1;
+  padding:.85rem;
+  border-radius:.5rem;
+  border:1px solid #e5e7eb;
+  font-size:1.1rem;
+  min-width:0; /* Firefox fix */
+}
 
-    button{
-      padding:.85rem 1.2rem;
-      border-radius:.5rem;
-      border:none;
-      background:#2563eb;
-      color:white;
-      font-weight:600;
-      font-size:1.1rem; /* +10% */
-      cursor:pointer
-    }
+button{
+  padding:.85rem 1.2rem;
+  border-radius:.5rem;
+  border:none;
+  background:#2563eb;
+  color:white;
+  font-weight:600;
+  font-size:1.1rem;
+  cursor:pointer
+}
 
-    .hint{text-align:center;font-size:.95rem;color:#475569;margin-top:.5rem}
+@media (max-width:640px){
+  button{width:100%}
+}
 
-    .loader{
-      width:24px;
-      height:24px;
-      border:3px solid #e5e7eb;
-      border-top:3px solid #2563eb;
-      border-radius:50%;
-      animation:spin .8s linear infinite;
-      margin:1.5rem auto;
-      display:none
-    }
+.hint{text-align:center;font-size:.95rem;color:#475569;margin-top:.5rem}
 
-    @keyframes spin{to{transform:rotate(360deg)}}
+.loader{
+  width:24px;
+  height:24px;
+  border:3px solid #e5e7eb;
+  border-top:3px solid #2563eb;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:1.5rem auto;
+  display:none
+}
 
-    .results{max-width:700px;margin:1rem auto}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-    .card{
-      border:1px solid #e5e7eb;
-      border-radius:.75rem;
-      padding:1rem;
-      margin-bottom:.75rem
-    }
+.results{max-width:700px;margin:1rem auto}
 
-    .breadcrumb{
-      font-size:.8rem; /* +10% */
-      color:#64748b;
-      font-family:monospace
-    }
+.card{
+  border:1px solid #e5e7eb;
+  border-radius:.75rem;
+  padding:1rem;
+  margin-bottom:.75rem
+}
 
-    .code{
-      font-family:monospace;
-      font-weight:700;
-      color:#1d4ed8;
-      font-size:1.15rem; /* +10% */
-    }
+.breadcrumb{
+  font-size:.8rem;
+  color:#64748b;
+  font-family:monospace
+}
 
-    .desc{
-      margin-top:.25rem;
-      font-size:1.05rem; /* +10% */
-    }
+.code{
+  font-family:monospace;
+  font-weight:700;
+  color:#1d4ed8;
+  font-size:1.15rem;
+}
 
-    .center{text-align:center}
-  </style>
+.desc{
+  margin-top:.25rem;
+  font-size:1.05rem;
+}
 
-  <!-- PapaParse lazy -->
-  <script>
-    function loadPapaParse(cb){
-      if(window.Papa)return cb();
-      const s=document.createElement("script");
-      s.src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js";
-      s.defer=true;
-      s.onload=cb;
-      document.head.appendChild(s);
-    }
-  </script>
+.center{text-align:center}
+</style>
+
+<!-- PapaParse lazy -->
+<script>
+function loadPapaParse(cb){
+  if(window.Papa)return cb();
+  const s=document.createElement("script");
+  s.src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js";
+  s.defer=true;
+  s.onload=cb;
+  document.head.appendChild(s);
+}
+</script>
+
+<!-- Firefox fallback -->
+<script>
+if(!window.requestIdleCallback){
+  window.requestIdleCallback=function(cb){
+    return setTimeout(cb,1);
+  };
+}
+</script>
+
 </head>
-
 <body>
 
 <header>
@@ -143,12 +155,13 @@
 </header>
 
 <main>
+  <div class="hint">Cari kode klasifikasi arsip dengan cepat</div>
+
   <div class="search-box">
     <form id="searchForm">
       <input id="searchInput" type="text" placeholder="Ketik kata atau kalimat..." autocomplete="off">
       <button type="submit">CARI</button>
     </form>
-    <div class="hint">Cari kode klasifikasi arsip dengan cepat</div>
     <div id="loader" class="loader"></div>
   </div>
 
@@ -159,96 +172,96 @@
 </main>
 
 <script defer>
-  const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vT3jPw6CxKWkDyP-bIKQ0Wqd5KxokevU_5StuP6og0Y2frtVmHdZngrTr7xyXtipPF9JzfduelqSJH1/pub?output=csv";
-  let archiveData=[],allWords=[];
+const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vT3jPw6CxKWkDyP-bIKQ0Wqd5KxokevU_5StuP6og0Y2frtVmHdZngrTr7xyXtipPF9JzfduelqSJH1/pub?output=csv";
+let archiveData=[],allWords=[];
 
-  function levenshtein(a,b){
-    const m=[];
-    for(let i=0;i<=b.length;i++){
-      m[i]=[i];
-      for(let j=1;j<=a.length;j++){
-        m[i][j]=i===0?j:b[i-1]===a[j-1]?m[i-1][j-1]:
-          Math.min(m[i-1][j-1]+1,m[i][j-1]+1,m[i-1][j]+1);
-      }
+function levenshtein(a,b){
+  const m=[];
+  for(let i=0;i<=b.length;i++){
+    m[i]=[i];
+    for(let j=1;j<=a.length;j++){
+      m[i][j]=i===0?j:b[i-1]===a[j-1]?m[i-1][j-1]:
+      Math.min(m[i-1][j-1]+1,m[i][j-1]+1,m[i-1][j]+1);
     }
-    return m[b.length][a.length];
   }
+  return m[b.length][a.length];
+}
 
-  function loadData(){
-    Papa.parse(SHEET_URL,{
-      download:true,
-      header:true,
-      skipEmptyLines:true,
-      complete:r=>{
-        archiveData=r.data;
-        const set=new Set();
-        archiveData.forEach(i=>{
-          const t=`${i.KODE_KLASIFIKASI||""} ${i.URAIAN||""} ${i.KEYWORD||""}`.toLowerCase();
-          (t.match(/[\w.]+/g)||[]).forEach(w=>set.add(w));
-        });
-        allWords=[...set];
-      }
-    });
-  }
-
-  function getSuggestion(q){
-    let best=null,min=3;
-    allWords.forEach(w=>{
-      const d=levenshtein(q,w);
-      if(d<min){min=d;best=w;}
-    });
-    return best;
-  }
-
-  function performSearch(q){
-    const terms=q.toLowerCase().split(" ");
-    return archiveData.filter(i=>{
-      const t=`${i.KODE_KLASIFIKASI||""} ${i.URAIAN||""} ${i.KEYWORD||""}`.toLowerCase();
-      return terms.every(x=>t.includes(x));
-    }).slice(0,50);
-  }
-
-  function makeBreadcrumb(k){
-    const p=k.split(".");
-    return p.map((_,i)=>p.slice(0,i+1).join(".")).join(" › ");
-  }
-
-  function showResults(q){
-    const data=performSearch(q);
-    const info=document.getElementById("searchInfo");
-    const c=document.getElementById("resultsContainer");
-    loader.style.display="none";
-
-    if(!data.length){
-      const sug=getSuggestion(q);
-      info.innerHTML=sug?
-        `Mungkin maksud Anda: <button onclick="searchInput.value='${sug}';searchForm.dispatchEvent(new Event('submit'))">${sug}</button>?`
-        : `Tidak ditemukan hasil untuk <b>${q}</b>`;
-      c.innerHTML="";
-      return;
+function loadData(){
+  Papa.parse(SHEET_URL,{
+    download:true,
+    header:true,
+    skipEmptyLines:true,
+    complete:r=>{
+      archiveData=r.data;
+      const set=new Set();
+      archiveData.forEach(i=>{
+        const t=`${i.KODE_KLASIFIKASI||""} ${i.URAIAN||""} ${i.KEYWORD||""}`.toLowerCase();
+        (t.match(/[\w.]+/g)||[]).forEach(w=>set.add(w));
+      });
+      allWords=[...set];
     }
-
-    info.innerHTML=`Menampilkan hasil untuk: <b>${q}</b>`;
-    c.innerHTML=data.map(i=>`
-      <div class="card">
-        <div class="breadcrumb">${makeBreadcrumb(i.KODE_KLASIFIKASI)}</div>
-        <div class="code">${i.KODE_KLASIFIKASI}</div>
-        <div class="desc">${i.URAIAN}</div>
-      </div>
-    `).join("");
-  }
-
-  document.addEventListener("DOMContentLoaded",()=>{
-    loadPapaParse(loadData);
-
-    searchForm.addEventListener("submit",e=>{
-      e.preventDefault();
-      const q=searchInput.value.trim();
-      if(q.length<2)return;
-      loader.style.display="block";
-      setTimeout(()=>showResults(q),150);
-    });
   });
+}
+
+function getSuggestion(q){
+  let best=null,min=3;
+  allWords.forEach(w=>{
+    const d=levenshtein(q,w);
+    if(d<min){min=d;best=w;}
+  });
+  return best;
+}
+
+function performSearch(q){
+  const terms=q.toLowerCase().split(" ");
+  return archiveData.filter(i=>{
+    const t=`${i.KODE_KLASIFIKASI||""} ${i.URAIAN||""} ${i.KEYWORD||""}`.toLowerCase();
+    return terms.every(x=>t.includes(x));
+  }).slice(0,50);
+}
+
+function makeBreadcrumb(k){
+  const p=k.split(".");
+  return p.map((_,i)=>p.slice(0,i+1).join(".")).join(" › ");
+}
+
+function showResults(q){
+  const data=performSearch(q);
+  const info=document.getElementById("searchInfo");
+  const c=document.getElementById("resultsContainer");
+  loader.style.display="none";
+
+  if(!data.length){
+    const sug=getSuggestion(q);
+    info.innerHTML=sug?
+      `Mungkin maksud Anda: <button onclick="searchInput.value='${sug}';searchForm.dispatchEvent(new Event('submit'))">${sug}</button>?`
+      : `Tidak ditemukan hasil untuk <b>${q}</b>`;
+    c.innerHTML="";
+    return;
+  }
+
+  info.innerHTML=`Menampilkan hasil untuk: <b>${q}</b>`;
+  c.innerHTML=data.map(i=>`
+    <div class="card">
+      <div class="breadcrumb">${makeBreadcrumb(i.KODE_KLASIFIKASI)}</div>
+      <div class="code">${i.KODE_KLASIFIKASI}</div>
+      <div class="desc">${i.URAIAN}</div>
+    </div>
+  `).join("");
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  loadPapaParse(loadData);
+
+  searchForm.addEventListener("submit",e=>{
+    e.preventDefault();
+    const q=searchInput.value.trim();
+    if(q.length<2)return;
+    loader.style.display="block";
+    setTimeout(()=>showResults(q),150);
+  });
+});
 </script>
 
 </body>
