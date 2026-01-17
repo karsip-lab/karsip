@@ -31,12 +31,7 @@
 
 <style>
 
-.fade-out {
-  opacity: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: all 0.5s ease;
-}
+
 
 body { font-family: 'Inter', sans-serif; }
 .hidden{display:none}
@@ -74,14 +69,12 @@ body { font-family: 'Inter', sans-serif; }
 <main id="page-home" class="flex-grow container mx-auto px-4 mt-8 pb-24 relative">
 
 
-<div id="aboutBox"
-     class="max-w-3xl mx-auto bg-white border border-gray-200
-            p-6 sm:p-8 rounded-xl shadow mb-10 transition-all">
+<div class="max-w-3xl mx-auto bg-white border border-gray-200
+            p-6 sm:p-8 rounded-xl shadow mb-10">
     
 <h2 class="text-2xl font-bold mb-4">Apa Itu KArsip?</h2>
     <p class="text-sm-700 leading-relaxed mb-4">
-      KArsip adalah web aplikasi pencarian kode klasifikasi arsip
-      yang dibuat untuk membantu arsiparis, pengelola arsip, atau seluruh pegawai ASN pemerintah provinsi, kabupaten/kota dalam menentukan kode klasifikasi untuk pemberkasan arsip dan penomoran naskah dinas secara cepat.
+      KArsip adalah web aplikasi pencarian kode klasifikasi arsip pemerintah daerah untuk pemberkasan arsip dan penomoran naskah dinas secara cepat.
     </p>
 <p class="text-sm-700 leading-relaxed mb-4">
       Database KArsip berpedoman pada kode klasifikasi arsip yang berlaku di pemerintah daerah saat ini, yaitu Permendagri Nomor 83 Tahun 2022 tentang Kode Klasifikasi Arsip di Lingkungan Kementerian Dalam Negeri dan Pemerintah Daerah dan akan terus diperbarui.
@@ -286,9 +279,9 @@ const aboutBox = document.getElementById("aboutBox");
 if (searchInput && aboutBox) {
   searchInput.addEventListener("input", () => {
   if (searchInput.value.trim().length > 0) {
-    aboutBox.classList.add("fade-out");
+    aboutBox.classList.add("hidden");
   } else {
-    aboutBox.classList.remove("fade-out");
+    aboutBox.classList.remove("hidden");
     }
   });
 }
