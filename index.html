@@ -9,9 +9,6 @@
 
   <link rel="canonical" href="https://karsip.pages.dev/">
 
-  <!-- Preload CSV -->
-  <link rel="preload" as="fetch" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vT3jPw6CxKWkDyP-bIKQ0Wqd5KxokevU_5StuP6og0Y2frtVmHdZngrTr7xyXtipPF9JzfduelqSJH1/pub?output=csv" crossorigin>
-
 <style>
 *{box-sizing:border-box}
 body{
@@ -22,7 +19,7 @@ body{
   font-size:1.1rem;
 }
 
-header{background:#0f172a;color:#fff;padding:2rem 1rem;position:relative}
+header{background:#0f172a;color:#fff;padding:2rem 1rem}
 
 .brand{
   font-size:2.2rem;
@@ -56,7 +53,7 @@ input{
   border-radius:.5rem;
   border:1px solid #e5e7eb;
   font-size:1.1rem;
-  min-width:0; /* Firefox fix */
+  min-width:0;
 }
 
 button{
@@ -119,24 +116,28 @@ button{
 .center{text-align:center}
 </style>
 
-<!-- PapaParse lazy -->
-<script>
-function loadPapaParse(cb){
-  if(window.Papa)return cb();
-  const s=document.createElement("script");
-  s.src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js";
-  s.defer=true;
-  s.onload=cb;
-  document.head.appendChild(s);
-}
-</script>
-
 <!-- Firefox fallback -->
 <script>
 if(!window.requestIdleCallback){
   window.requestIdleCallback=function(cb){
     return setTimeout(cb,1);
   };
+}
+</script>
+
+<!-- PapaParse loader (Firefox safe) -->
+<script>
+function loadPapaParse(cb){
+  if (window.Papa) {
+    cb();
+    return;
+  }
+  const s = document.createElement("script");
+  s.src = "https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js";
+  s.onload = () => {
+    if (window.Papa) cb();
+  };
+  document.head.appendChild(s);
 }
 </script>
 
@@ -171,7 +172,7 @@ if(!window.requestIdleCallback){
   </div>
 </main>
 
-<script defer>
+<script>
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vT3jPw6CxKWkDyP-bIKQ0Wqd5KxokevU_5StuP6og0Y2frtVmHdZngrTr7xyXtipPF9JzfduelqSJH1/pub?output=csv";
 let archiveData=[],allWords=[];
 
@@ -252,7 +253,9 @@ function showResults(q){
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
-  loadPapaParse(loadData);
+  loadPapaParse(() => {
+    loadData();
+  });
 
   searchForm.addEventListener("submit",e=>{
     e.preventDefault();
