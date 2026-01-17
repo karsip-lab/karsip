@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>KArsip – Pencarian Kode Klasifikasi Arsip Pemerintah Daerah</title>
+  <title>KArsip - Pencarian Kode Klasifikasi Arsip Pemerintah Daerah</title>
   <meta name="description" content="KArsip adalah aplikasi pencarian cepat kode klasifikasi arsip pemerintah daerah untuk pemberkasan arsip dan penomoran naskah dinas.">
 
   <link rel="canonical" href="https://karsip.pages.dev/">
@@ -13,7 +13,8 @@
   <link rel="preload" as="fetch" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vT3jPw6CxKWkDyP-bIKQ0Wqd5KxokevU_5StuP6og0Y2frtVmHdZngrTr7xyXtipPF9JzfduelqSJH1/pub?output=csv" crossorigin>
 
   <!-- Critical CSS (INLINE) -->
-  <style>
+  
+<style>
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -26,10 +27,12 @@
     header{background:#0f172a;color:#fff;padding:2rem 1rem;position:relative}
 
     .brand{
-      font-size:2.2rem; /* sebelumnya 2rem */
-      font-weight:800;
-      font-style:italic;
-      text-align:center
+  font-size: clamp(2.2rem, 2.2rem, 2.2rem);
+  font-weight:800;
+  font-style:italic;
+  text-align:center;
+  line-height: 1;
+  white-space: nowrap;
     }
     .brand span:first-child{color:#3b82f6}
     .brand span:last-child{color:#ef4444}
@@ -130,7 +133,7 @@
 
 <header>
   <div class="brand"><span>K</span><span>A</span>rsip</div>
-  <div class="subtitle">Pencarian Kode Klasifikasi Arsip Pemerintah Daerah</div>
+  <div class="subtitle"><strong>Pencarian Kode Klasifikasi Arsip Pemerintah Daerah</strong></div>
 
   <nav>
     <a href="index.html">Home</a>
