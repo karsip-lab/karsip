@@ -1,219 +1,182 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>KArsip – Pencarian Kode Klasifikasi Arsip Pemerintah Daerah</title>
-
-  <meta name="description" content="KArsip adalah aplikasi pencarian cepat kode klasifikasi arsip pemerintah daerah untuk pemberkasan arsip dan penomoran naskah dinas. Berpedoman pada Permendagri Nomor 83 Tahun 2022 dan diperbarui secara berkala.">
-
-  <meta name="keywords" content="kode klasifikasi arsip, arsip pemerintah, arsip ASN, sistem kearsipan, klasifikasi arsip daerah">
-  <meta name="author" content="KArsip">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="KArsip – Pencarian Kode Klasifikasi Arsip Pemerintah Daerah">
-  <meta property="og:description" content="Aplikasi pencarian kode klasifikasi arsip pemerintah daerah. Cepat, akurat, dan gratis.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://karsip.pages.dev">
-  <meta property="og:image" content="https://karsip.pages.dev/og-image.jpg">
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="KArsip – Pencarian Kode Klasifikasi Arsip">
-  <meta name="twitter:description" content="Cari kode klasifikasi arsip pemerintah daerah dengan cepat dan akurat.">
-  <meta name="twitter:image" content="https://karsip.pages.dev/og-image.jpg">
+  <title>KArsip � Pencarian Kode Klasifikasi Arsip Pemerintah Daerah</title>
+  <meta name="description" content="KArsip adalah aplikasi pencarian cepat kode klasifikasi arsip pemerintah daerah untuk pemberkasan arsip dan penomoran naskah dinas.">
 
   <link rel="canonical" href="https://karsip.pages.dev/">
 
-  <!-- Fonts & Tailwind -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Preload CSV -->
+  <link rel="preload" as="fetch" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vT3jPw6CxKWkDyP-bIKQ0Wqd5KxokevU_5StuP6og0Y2frtVmHdZngrTr7xyXtipPF9JzfduelqSJH1/pub?output=csv" crossorigin>
 
-  <!-- PapaParse -->
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-
-  <!-- Custom CSS -->
+  <!-- Critical CSS (INLINE) -->
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    .hidden {
-      display: none;
-    }
-    .loader {
-      border: 3px solid #f3f3f3;
-      border-top: 3px solid #3b82f6;
-      border-radius: 50%;
-      width: 24px;
-      height: 24px;
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;background:#fff;color:#1e293b}
+    header{background:#0f172a;color:#fff;padding:2rem 1rem;position:relative}
+    .brand{font-size:2rem;font-weight:800;font-style:italic;text-align:center}
+    .brand span:first-child{color:#3b82f6}
+    .brand span:last-child{color:#ef4444}
+    .subtitle{text-align:center;color:#cbd5f5;font-size:.9rem;margin-top:.25rem}
+    nav{display:flex;gap:1rem;justify-content:center;margin-top:1rem}
+    nav a{color:white;text-decoration:none;font-weight:600;font-size:.9rem}
+
+    main{padding:1rem;max-width:900px;margin:auto}
+    .search-box{max-width:700px;margin:2rem auto 1rem}
+    form{display:flex;gap:.5rem;flex-wrap:wrap}
+    input{flex:1;padding:.8rem;border-radius:.5rem;border:1px solid #e5e7eb;font-size:1rem}
+    button{padding:.8rem 1.2rem;border-radius:.5rem;border:none;background:#2563eb;color:white;font-weight:600;cursor:pointer}
+
+    .hint{text-align:center;font-size:.85rem;color:#475569;margin-top:.5rem}
+
+    .loader{width:24px;height:24px;border:3px solid #e5e7eb;border-top:3px solid #2563eb;border-radius:50%;animation:spin .8s linear infinite;margin:1.5rem auto;display:none}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .results{max-width:700px;margin:1rem auto}
+    .card{border:1px solid #e5e7eb;border-radius:.75rem;padding:1rem;margin-bottom:.75rem}
+    .breadcrumb{font-size:.7rem;color:#64748b;font-family:monospace}
+    .code{font-family:monospace;font-weight:700;color:#1d4ed8}
+    .desc{margin-top:.25rem}
+
+    .center{text-align:center}
   </style>
+
+  <!-- PapaParse lazy -->
+  <script>
+    function loadPapaParse(cb){
+      if(window.Papa)return cb();
+      const s=document.createElement("script");
+      s.src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js";
+      s.defer=true;
+      s.onload=cb;
+      document.head.appendChild(s);
+    }
+  </script>
 </head>
 
-<body class="min-h-screen flex flex-col bg-white text-slate-800">
+<body>
 
-<!-- HEADER -->
-<header class="bg-slate-900 text-white py-8 sm:py-10 shadow-lg relative">
-  <div class="container mx-auto px-4 text-center">
-    <div class="text-3xl sm:text-4xl font-extrabold italic">
-      <span class="text-blue-500">K</span><span class="text-red-500">A</span>rsip
-    </div>
-    <h1 class="text-sm sm:text-base md:text-lg font-medium text-slate-300 mt-1">
-      Pencarian Kode Klasifikasi Arsip Pemerintah Daerah
-    </h1>
-  </div>
+<header>
+  <div class="brand"><span>K</span><span>A</span>rsip</div>
+  <div class="subtitle">Pencarian Kode Klasifikasi Arsip Pemerintah Daerah</div>
 
-  <nav class="mt-4 flex justify-center gap-6 sm:absolute sm:top-6 sm:left-6 sm:mt-0 text-sm font-semibold">
+  <nav>
     <a href="index.html">Home</a>
     <a href="tentang.html">Tentang</a>
     <a href="kontak.html">Kontak</a>
   </nav>
 </header>
 
-<!-- MAIN -->
-<main class="flex-grow container mx-auto px-4 mt-8 pb-24">
-
-  <!-- SEARCH -->
-  <div class="max-w-xl sm:max-w-3xl mx-auto">
-    <form id="searchForm" class="flex flex-col sm:flex-row gap-2">
-      <input
-        id="searchInput"
-        type="text"
-        class="w-full flex-grow px-4 py-3 rounded-lg border bg-gray-50 text-base"
-        placeholder="Ketik kata atau kalimat yang dicari..."
-        autocomplete="off"
-      >
-      <button
-        type="submit"
-        class="px-4 py-3 bg-blue-600 text-white rounded-lg text-sm sm:text-base font-semibold"
-      >
-        CARI
-      </button>
+<main>
+  <div class="search-box">
+    <form id="searchForm">
+      <input id="searchInput" type="text" placeholder="Ketik kata atau kalimat..." autocomplete="off">
+      <button type="submit">CARI</button>
     </form>
-
-    <p class="text-sm text-gray-700 mt-4 text-center">
-      Cari kode klasifikasi arsip pemerintah daerah dengan cepat
-    </p>
-
-    <div id="home-loader" class="hidden mt-6 flex justify-center">
-      <div class="loader"></div>
-    </div>
+    <div class="hint">Cari kode klasifikasi arsip dengan cepat</div>
+    <div id="loader" class="loader"></div>
   </div>
 
-  <!-- RESULTS -->
-  <div class="max-w-3xl mx-auto mt-6">
-    <div id="searchInfo" class="text-sm text-gray-500 mb-3 text-center"></div>
-    <div id="resultsContainer" class="space-y-3"></div>
+  <div class="results">
+    <div id="searchInfo" class="center"></div>
+    <div id="resultsContainer"></div>
   </div>
-
 </main>
 
-<!-- SCRIPT -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
+<script defer>
+  const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vT3jPw6CxKWkDyP-bIKQ0Wqd5KxokevU_5StuP6og0Y2frtVmHdZngrTr7xyXtipPF9JzfduelqSJH1/pub?output=csv";
+  let archiveData=[],allWords=[];
 
-  const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT3jPw6CxKWkDyP-bIKQ0Wqd5KxokevU_5StuP6og0Y2frtVmHdZngrTr7xyXtipPF9JzfduelqSJH1/pub?output=csv";
-  let archiveData = [];
-  let allWords = [];
-
-  function levenshtein(a, b) {
-    const m = [];
-    for (let i = 0; i <= b.length; i++) {
-      m[i] = [i];
-      for (let j = 1; j <= a.length; j++) {
-        m[i][j] = i === 0
-          ? j
-          : b[i - 1] === a[j - 1]
-            ? m[i - 1][j - 1]
-            : Math.min(m[i - 1][j - 1] + 1, m[i][j - 1] + 1, m[i - 1][j] + 1);
+  function levenshtein(a,b){
+    const m=[];
+    for(let i=0;i<=b.length;i++){
+      m[i]=[i];
+      for(let j=1;j<=a.length;j++){
+        m[i][j]=i===0?j:b[i-1]===a[j-1]?m[i-1][j-1]:
+          Math.min(m[i-1][j-1]+1,m[i][j-1]+1,m[i-1][j]+1);
       }
     }
     return m[b.length][a.length];
   }
 
-  function loadData() {
-    Papa.parse(SHEET_URL, {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: results => {
-        archiveData = results.data;
-        const set = new Set();
-        archiveData.forEach(i => {
-          const text = `${i.KODE_KLASIFIKASI||""} ${i.URAIAN||""} ${i.KEYWORD||""}`.toLowerCase();
-          (text.match(/[\w.]+/g) || []).forEach(w => set.add(w));
+  function loadData(){
+    Papa.parse(SHEET_URL,{
+      download:true,
+      header:true,
+      skipEmptyLines:true,
+      complete:r=>{
+        archiveData=r.data;
+        const set=new Set();
+        archiveData.forEach(i=>{
+          const t=`${i.KODE_KLASIFIKASI||""} ${i.URAIAN||""} ${i.KEYWORD||""}`.toLowerCase();
+          (t.match(/[\w.]+/g)||[]).forEach(w=>set.add(w));
         });
-        allWords = [...set];
+        allWords=[...set];
       }
     });
   }
 
-  function getSuggestion(q) {
-    let best = null, min = 3;
-    allWords.forEach(w => {
-      const d = levenshtein(q, w);
-      if (d < min) {
-        min = d;
-        best = w;
-      }
+  function getSuggestion(q){
+    let best=null,min=3;
+    allWords.forEach(w=>{
+      const d=levenshtein(q,w);
+      if(d<min){min=d;best=w;}
     });
     return best;
   }
 
-  function performSearch(q) {
-    const terms = q.toLowerCase().split(" ");
-    return archiveData.filter(i => {
-      const text = `${i.KODE_KLASIFIKASI||""} ${i.URAIAN||""} ${i.KEYWORD||""}`.toLowerCase();
-      return terms.every(t => text.includes(t));
-    }).slice(0, 50);
+  function performSearch(q){
+    const terms=q.toLowerCase().split(" ");
+    return archiveData.filter(i=>{
+      const t=`${i.KODE_KLASIFIKASI||""} ${i.URAIAN||""} ${i.KEYWORD||""}`.toLowerCase();
+      return terms.every(x=>t.includes(x));
+    }).slice(0,50);
   }
 
-  function makeBreadcrumb(kode) {
-    const parts = kode.split(".");
-    return parts.map((_, i) => parts.slice(0, i + 1).join(".")).join(" › ");
+  function makeBreadcrumb(k){
+    const p=k.split(".");
+    return p.map((_,i)=>p.slice(0,i+1).join(".")).join(" � ");
   }
 
-  function showResults(q) {
-    const data = performSearch(q);
-    const info = document.getElementById("searchInfo");
-    const c = document.getElementById("resultsContainer");
+  function showResults(q){
+    const data=performSearch(q);
+    const info=document.getElementById("searchInfo");
+    const c=document.getElementById("resultsContainer");
+    loader.style.display="none";
 
-    document.getElementById("home-loader").classList.add("hidden");
-
-    if (!data.length) {
-      const sug = getSuggestion(q);
-      info.innerHTML = sug
-        ? `Mungkin maksud Anda: <button class="text-blue-600 underline" onclick="document.getElementById('searchInput').value='${sug}'; document.getElementById('searchForm').dispatchEvent(new Event('submit'))">${sug}</button>?`
+    if(!data.length){
+      const sug=getSuggestion(q);
+      info.innerHTML=sug?
+        `Mungkin maksud Anda: <button onclick="searchInput.value='${sug}';searchForm.dispatchEvent(new Event('submit'))">${sug}</button>?`
         : `Tidak ditemukan hasil untuk <b>${q}</b>`;
-      c.innerHTML = "";
+      c.innerHTML="";
       return;
     }
 
-    info.innerHTML = `Menampilkan hasil untuk: <b>${q}</b>`;
-    c.innerHTML = data.map(i => `
-      <div class="border rounded-xl p-4 shadow-sm">
-        <div class="text-xs text-gray-500 font-mono mb-1">${makeBreadcrumb(i.KODE_KLASIFIKASI)}</div>
-        <div class="font-mono text-blue-700 font-bold text-lg">${i.KODE_KLASIFIKASI}</div>
-        <div class="text-slate-700 text-base mt-1">${i.URAIAN}</div>
+    info.innerHTML=`Menampilkan hasil untuk: <b>${q}</b>`;
+    c.innerHTML=data.map(i=>`
+      <div class="card">
+        <div class="breadcrumb">${makeBreadcrumb(i.KODE_KLASIFIKASI)}</div>
+        <div class="code">${i.KODE_KLASIFIKASI}</div>
+        <div class="desc">${i.URAIAN}</div>
       </div>
     `).join("");
   }
 
-  document.getElementById("searchForm").addEventListener("submit", e => {
-    e.preventDefault();
-    const q = document.getElementById("searchInput").value.trim();
-    if (q.length < 2) return;
-    document.getElementById("home-loader").classList.remove("hidden");
-    setTimeout(() => showResults(q), 200);
-  });
+  document.addEventListener("DOMContentLoaded",()=>{
+    loadPapaParse(loadData);
 
-  loadData();
-});
+    searchForm.addEventListener("submit",e=>{
+      e.preventDefault();
+      const q=searchInput.value.trim();
+      if(q.length<2)return;
+      loader.style.display="block";
+      setTimeout(()=>showResults(q),150);
+    });
+  });
 </script>
 
 </body>
