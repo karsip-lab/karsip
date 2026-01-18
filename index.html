@@ -8,6 +8,14 @@
   <link rel="canonical" href="https://karsip.pages.dev/">
 
 <style>
+
+.suggestion-link{
+  color:#2563eb;
+  text-decoration:underline;
+  cursor:pointer;
+  font-weight:600;
+}
+
 *{box-sizing:border-box}
 body{
   margin:0;
@@ -258,13 +266,27 @@ function showResults(q){
   loader.style.display="none";
 
   if(!data.length){
-    const sug=getSuggestion(q);
-    info.innerHTML=sug?
-      `Mungkin maksud Anda: <button onclick="searchInput.value='${sug}';searchForm.dispatchEvent(new Event('submit'))">${sug}</button>?`
-      : `Tidak ditemukan hasil untuk <b>${q}</b>`;
-    c.innerHTML="";
-    return;
+  const sug = getSuggestion(q);
+  info.innerHTML = sug
+    ? `Mungkin maksud Anda: <a href="#" class="suggestion-link">${sug}</a>?`
+    : `Tidak ditemukan hasil untuk <b>${q}</b>`;
+  c.innerHTML = "";
+
+  if(sug){
+    setTimeout(() => {
+      const link = document.querySelector(".suggestion-link");
+      if(link){
+        link.addEventListener("click", e => {
+          e.preventDefault();
+          searchInput.value = sug;
+          searchForm.dispatchEvent(new Event("submit"));
+        });
+      }
+    }, 0);
   }
+
+  return;
+}
 
   info.innerHTML=`Menampilkan hasil untuk: <b>${q}</b>`;
   c.innerHTML=data.map(i=>`
