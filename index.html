@@ -8,7 +8,6 @@
   <link rel="canonical" href="https://karsip.pages.dev/">
 
 <style>
-
 .suggestion-link{
   color:#2563eb;
   text-decoration:underline;
@@ -147,12 +146,6 @@ button{
 </style>
 
 <script>
-if(!window.requestIdleCallback){
-  window.requestIdleCallback=function(cb){return setTimeout(cb,1);}
-}
-</script>
-
-<script>
 function loadPapaParse(cb){
   if (window.Papa) { cb(); return; }
   const s = document.createElement("script");
@@ -259,6 +252,11 @@ function makeBreadcrumb(k){
   return p.map((_,i)=>p.slice(0,i+1).join(".")).join(" › ");
 }
 
+function useSuggestion(word){
+  searchInput.value = word;
+  searchForm.dispatchEvent(new Event("submit"));
+}
+
 function showResults(q){
   const data=performSearch(q);
   const info=document.getElementById("searchInfo");
@@ -266,27 +264,13 @@ function showResults(q){
   loader.style.display="none";
 
   if(!data.length){
-  const sug = getSuggestion(q);
-  info.innerHTML = sug
-    ? `Mungkin maksud Anda: <a href="#" class="suggestion-link">${sug}</a>?`
-    : `Tidak ditemukan hasil untuk <b>${q}</b>`;
-  c.innerHTML = "";
-
-  if(sug){
-    setTimeout(() => {
-      const link = document.querySelector(".suggestion-link");
-      if(link){
-        link.addEventListener("click", e => {
-          e.preventDefault();
-          searchInput.value = sug;
-          searchForm.dispatchEvent(new Event("submit"));
-        });
-      }
-    }, 0);
+    const sug = getSuggestion(q);
+    info.innerHTML = sug
+      ? `Mungkin maksud Anda: <a href="#" class="suggestion-link" onclick="useSuggestion('${sug}')">${sug}</a>?`
+      : `Tidak ditemukan hasil untuk <b>${q}</b>`;
+    c.innerHTML = "";
+    return;
   }
-
-  return;
-}
 
   info.innerHTML=`Menampilkan hasil untuk: <b>${q}</b>`;
   c.innerHTML=data.map(i=>`
