@@ -288,13 +288,14 @@ document.addEventListener("DOMContentLoaded",()=>{
     const q=searchInput.value.trim();
     if(q.length<2)return;
 
-    history.replaceState(null, "", "?q=" + encodeURIComponent(q));
+    const prettyQ = q.trim().replace(/\s+/g, "+");
+history.replaceState(null, "", "?q=" + prettyQ);
 
     loader.style.display="block";
     setTimeout(()=>showResults(q),150);
   });
 
-  const initialQuery = getQueryParam("q");
+  const initialQuery = getQueryParam("q")?.replace(/\+/g, " ");
   if(initialQuery){
     searchInput.value = initialQuery;
     loader.style.display="block";
