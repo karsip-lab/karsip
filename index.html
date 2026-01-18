@@ -52,7 +52,6 @@ nav{
 }
 nav a{color:white;text-decoration:none;font-weight:600;font-size:.95rem}
 
-/* Hamburger */
 .menu-toggle{
   display:none;
   position:absolute;
@@ -150,7 +149,7 @@ function loadPapaParse(cb){
   if (window.Papa) { cb(); return; }
   const s = document.createElement("script");
   s.src = "https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js";
-  s.onload = () => { if (window.Papa) cb(); };
+  s.onload = () => cb();
   document.head.appendChild(s);
 }
 </script>
@@ -191,6 +190,7 @@ function loadPapaParse(cb){
 <script>
 const toggle = document.querySelector(".menu-toggle");
 const nav = document.getElementById("mainNav");
+
 toggle.addEventListener("click", () => {
   const open = nav.classList.toggle("open");
   toggle.setAttribute("aria-expanded", open);
@@ -199,7 +199,14 @@ toggle.addEventListener("click", () => {
 
 <script>
 const SHEET_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vT3jPw6CxKWkDyP-bIKQ0Wqd5KxokevU_5StuP6og0Y2frtVmHdZngrTr7xyXtipPF9JzfduelqSJH1/pub?output=csv";
-let archiveData=[],allWords=[];
+
+let archiveData=[], allWords=[];
+
+const searchForm = document.getElementById("searchForm");
+const searchInput = document.getElementById("searchInput");
+const loader = document.getElementById("loader");
+const searchInfo = document.getElementById("searchInfo");
+const resultsContainer = document.getElementById("resultsContainer");
 
 function levenshtein(a,b){
   const m=[];
@@ -259,21 +266,19 @@ function useSuggestion(word){
 
 function showResults(q){
   const data=performSearch(q);
-  const info=document.getElementById("searchInfo");
-  const c=document.getElementById("resultsContainer");
   loader.style.display="none";
 
   if(!data.length){
     const sug = getSuggestion(q);
-    info.innerHTML = sug
+    searchInfo.innerHTML = sug
       ? `Mungkin maksud Anda: <a href="#" class="suggestion-link" onclick="useSuggestion('${sug}')">${sug}</a>?`
       : `Tidak ditemukan hasil untuk <b>${q}</b>`;
-    c.innerHTML = "";
+    resultsContainer.innerHTML = "";
     return;
   }
 
-  info.innerHTML=`Menampilkan hasil untuk: <b>${q}</b>`;
-  c.innerHTML=data.map(i=>`
+  searchInfo.innerHTML=`Menampilkan hasil untuk: <b>${q}</b>`;
+  resultsContainer.innerHTML=data.map(i=>`
     <div class="card">
       <div class="breadcrumb">${makeBreadcrumb(i.KODE_KLASIFIKASI)}</div>
       <div class="code">${i.KODE_KLASIFIKASI}</div>
