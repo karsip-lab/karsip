@@ -247,7 +247,7 @@ button:active {
 
   function makeBreadcrumb(k){
     const p=k.split(".");
-    return p.map((_,i)=>p.slice(0,i+1).join(".")).join(" › ");
+    return p.map((_,i)=>p.slice(0,i+1).join(".")).join(" > ");
   }
 
   function showResults(q){
