@@ -17,6 +17,10 @@
 
 <style>
 
+#searchInfo {
+  margin-bottom: 1.5rem;
+}
+
 @media (max-width: 480px) {
   form {
     flex-direction: column;
@@ -175,12 +179,13 @@ button:active {
 </header>
 
 <main>
+<div class="hint">Cari kode klasifikasi arsip dengan cepat</div>
   <div class="search-box">
     <form id="searchForm">
       <input id="searchInput" type="text" placeholder="Ketik kata atau kalimat..." autocomplete="off">
       <button type="submit">CARI</button>
     </form>
-    <div class="hint">Cari kode klasifikasi arsip dengan cepat</div>
+    
     <div id="loader" class="loader"></div>
   </div>
 
