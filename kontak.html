@@ -1,98 +1,67 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kontak - KArsip</title>
-  <meta name="description" content="Halaman kontak KArsip.">
-  <link rel="canonical" href="https://karsip.pages.dev/kontak.html">
 
-<style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
-  background:#fff;
-  color:#1e293b;
-  font-size:1.1rem;
-}
+  <title>Kontak KArsip � Hubungi Kami</title>
+  <meta name="description" content="Hubungi tim KArsip untuk pertanyaan, saran, atau kerja sama.">
+  <link rel="canonical" href="https://karsip.pages.dev/kontak">
 
-header{background:#0f172a;color:#fff;padding:2rem 1rem;position:relative}
+  <style>
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;
+      background:#fff;
+      color:#1e293b;
+      font-size:1.1rem; /* +10% */
+    }
 
-.brand{
-  font-size:2.2rem;
-  font-weight:700;
-  font-style:italic;
-  text-align:center;
-  line-height:1;
-  white-space:nowrap;
-  letter-spacing:0.6px;
-  text-shadow:
-    0.4px 0 currentColor,
-   -0.4px 0 currentColor;
+    header{background:#0f172a;color:#fff;padding:2rem 1rem;position:relative}
 
-}
-.brand span:first-child{color:#3b82f6}
-.brand span:last-child{color:#ef4444}
+    .brand{
+      font-size:2.2rem; /* +10% */
+      font-weight:800;
+      font-style:italic;
+      text-align:center
+    }
 
-.subtitle{
-  text-align:center;
-  color:#cbd5f5;
-  font-size:1rem;
-  margin-top:.25rem
-}
+    .brand span:first-child{color:#3b82f6}
+    .brand span:last-child{color:#ef4444}
 
-nav{
-  position:absolute;
-  left:1rem;
-  bottom:1rem;
-  display:flex;
-  gap:1rem;
-}
-nav a{color:white;text-decoration:none;font-weight:600;font-size:.95rem}
+    .subtitle{
+      text-align:center;
+      color:#cbd5f5;
+      font-size:1rem; /* +10% */
+      margin-top:.25rem
+    }
 
-/* Hamburger */
-.menu-toggle{
-  display:none;
-  position:absolute;
-  right:1rem;
-  top:1.5rem;
-  background:none;
-  border:none;
-  color:white;
-  font-size:1.6rem;
-  cursor:pointer;
-}
+    nav{display:flex;gap:1rem;justify-content:center;margin-top:1rem}
+    nav a{color:white;text-decoration:none;font-weight:600;font-size:.95rem}
 
-@media (max-width: 640px){
-  .menu-toggle{display:block}
-  nav{display:none;flex-direction:column;align-items:center}
-  nav.open{display:flex}
-}
+    main{padding:1rem;max-width:900px;margin:auto}
 
-main{padding:1rem;max-width:900px;margin:auto}
+    .panel{
+      max-width:700px;
+      margin:2rem auto;
+      border:1px solid #e5e7eb;
+      border-radius:.75rem;
+      padding:1.5rem
+    }
 
-.card{
-  border:1px solid #e5e7eb;
-  border-radius:.75rem;
-  padding:1rem;
-  margin-top:1rem
-}
-
-h1{font-size:1.6rem;margin-top:1.5rem}
-p{line-height:1.7}
-</style>
+    h2{margin-top:0;font-size:1.4rem}
+    p{line-height:1.6;color:#334155;font-size:1.05rem}
+  </style>
 </head>
 
 <body>
 
 <header>
   <div class="brand"><span>K</span><span>A</span>rsip</div>
-  <div class="subtitle"><strong>Pencarian Kode Klasifikasi Arsip Pemerintah Daerah</strong></div>
+  <div class="subtitle">Pencarian Kode Klasifikasi Arsip Pemerintah Daerah</div>
 
-  <button class="menu-toggle" aria-label="Buka menu" aria-expanded="false">☰</button>
-
-  <nav id="mainNav">
+  <nav>
     <a href="index.html">Home</a>
     <a href="tentang.html">Tentang</a>
     <a href="kontak.html">Kontak</a>
@@ -100,34 +69,21 @@ p{line-height:1.7}
 </header>
 
 <main>
-  <h1>Kontak</h1>
+  <div class="panel">
+    <h2>Kontak</h2>
 
-  <div class="card">
     <p>
-      Jika Anda memiliki saran, masukan, atau ingin melaporkan kesalahan data,
-      silakan hubungi pengelola KArsip.
+      Terima kasih telah menggunakan KArsip. Jika Anda memiliki pertanyaan
+      tentang layanan kami atau ingin mendiskusikan peluang kerja sama,
+      silakan hubungi kami:
     </p>
 
     <p>
-      Email: <strong>admin@karsip.pages.dev</strong><br>
-      Website: <strong>https://karsip.pages.dev</strong>
-    </p>
-
-    <p>
-      Aplikasi ini dikembangkan untuk membantu komunitas kearsipan secara gratis
-      dan terbuka.
+      Email: <b>admin@karsip.com</b><br>
+      Telepon: <b>0823xxx</b>
     </p>
   </div>
 </main>
-
-<script>
-const toggle = document.querySelector(".menu-toggle");
-const nav = document.getElementById("mainNav");
-toggle.addEventListener("click", () => {
-  const open = nav.classList.toggle("open");
-  toggle.setAttribute("aria-expanded", open);
-});
-</script>
 
 </body>
 </html>
