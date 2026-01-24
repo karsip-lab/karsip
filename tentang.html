@@ -887,6 +887,20 @@ body{line-height:inherit;margin:0;font-family:'Inter',sans-serif}
 .space-y-4 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse: 0; margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse))); margin-bottom: calc(1rem * var(--tw-space-y-reverse)); }
 .shadow-xl { box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
 
+/* Memberi jarak otomatis setiap ada paragraf baru */
+p {
+  margin-top: 0;
+  margin-bottom: 1.25rem; /* Ini setara dengan satu baris kosong */
+}
+
+/* Menghilangkan margin pada paragraf terakhir agar box tidak kepanjangan */
+p:last-child {
+  margin-bottom: 0;
+}
+
+
+
+
 </style>
 
 
