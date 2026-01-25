@@ -983,7 +983,7 @@ function performSearch(q){
       ${i.KEYWORD||""}
     `.toLowerCase();
     const words = text.match(/[\w.]+/g) || [];
-    return terms.every(term => words.includes(term));
+    return terms.every(term => words.some(w => w.startsWith(term)));
   }).slice(0,50);
 }
 
