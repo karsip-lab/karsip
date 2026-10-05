@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -569,7 +569,7 @@ animation:spin .8s linear infinite}
     --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
-  .\[--pattern-fg\:var\(--color-gray-950\)\]\/5 {
+  .[--pattern-fg\:var\(--color-gray-950\)\]\/5 {
     --pattern-fg: color-mix(in srgb, oklch(13% 0.028 261.692) 5%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       --pattern-fg: color-mix(in oklab, var(--color-gray-950) 5%, transparent);
@@ -902,7 +902,7 @@ body{line-height:inherit;margin:0;font-family:'Inter',sans-serif}
 <h1 class="text-sm sm:text-base md:text-lg font-medium text-slate-300 mt-1">
   Kode Klasifikasi Arsip Pemerintah Daerah
 </h1>
- 
+  
 
 
 </div>
@@ -987,15 +987,23 @@ function performSearch(q){
   }).slice(0,50);
 }
 
-// Breadcrumb
+// Breadcrumb (Hanya menampilkan Kode Sekunder beserta Uraiannya jika level > 2)
 function makeBreadcrumb(kode){
   const parts = kode.split(".");
-  let path=[], result=[];
-  for(let i=0;i<parts.length;i++){
-    path.push(parts[i]);
-    result.push(path.join("."));
+  
+  // Jika level <= 2 (contoh: '800' atau '800.1'), tidak perlu tampilkan breadcrumb
+  if (parts.length <= 2) {
+    return "";
   }
-  return result.join(" &gt; ");
+
+  // Ambil hanya kode sekunder (contoh: '800.1')
+  const sekunderKode = `${parts[0]}.${parts[1]}`;
+
+  // Cari item dengan kode sekunder tersebut di archiveData untuk mendapatkan Uraiannya
+  const parentItem = archiveData.find(item => item.KODE_KLASIFIKASI === sekunderKode);
+  const sekunderUraian = parentItem ? parentItem.URAIAN : "";
+
+  return sekunderUraian ? `${sekunderKode} ${sekunderUraian}` : sekunderKode;
 }
 
 // Tampilkan hasil pencarian
